@@ -1,0 +1,6 @@
+etc/
+var/
+elpa/
+packages/
+.last-package-update-day
+
