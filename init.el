@@ -264,9 +264,9 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-        '("~/org/Tasks.org"
-          "~/org/Habits.org"
-          "~/org/Anniversaries.org"))
+	'("~/org/Tasks.org"
+	  "~/org/Habits.org"
+	  "~/org/Anniversaries.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -274,7 +274,7 @@
 
   (setq org-todo-keywords
     '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+      (sequence "WAIT(w@/!)" "HOLD(h)" "|" "CANC(k@)")))
 
   (setq org-refile-targets
     '(("Archive.org" :maxlevel . 1)
@@ -302,12 +302,12 @@
    '(("d" "Dashboard"
      ((agenda "" ((org-deadline-warning-days 7)))
       (todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))
+	((org-agenda-overriding-header "Next Tasks")))
       (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
     ("n" "Next Tasks"
      ((todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))))
+	((org-agenda-overriding-header "Next Tasks")))))
 
     ("W" "Work Tasks" tags-todo "+work-email")
 
@@ -319,56 +319,56 @@
 
     ("w" "Workflow Status"
      ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Waiting on External")
+	     (org-agenda-files org-agenda-files)))
       (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "In Review")
+	     (org-agenda-files org-agenda-files)))
       (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "In Planning")
+	     (org-agenda-todo-list-sublevels nil)
+	     (org-agenda-files org-agenda-files)))
       (todo "BACKLOG"
-            ((org-agenda-overriding-header "Project Backlog")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Project Backlog")
+	     (org-agenda-todo-list-sublevels nil)
+	     (org-agenda-files org-agenda-files)))
       (todo "READY"
-            ((org-agenda-overriding-header "Ready for Work")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Ready for Work")
+	     (org-agenda-files org-agenda-files)))
       (todo "ACTIVE"
-            ((org-agenda-overriding-header "Active Projects")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Active Projects")
+	     (org-agenda-files org-agenda-files)))
       (todo "COMPLETED"
-            ((org-agenda-overriding-header "Completed Projects")
-             (org-agenda-files org-agenda-files)))
+	    ((org-agenda-overriding-header "Completed Projects")
+	     (org-agenda-files org-agenda-files)))
       (todo "CANC"
-            ((org-agenda-overriding-header "Cancelled Projects")
-             (org-agenda-files org-agenda-files)))))))
+	    ((org-agenda-overriding-header "Cancelled Projects")
+	     (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+      ("tt" "Task" entry (file+olp "~/org/Tasks.org" "Inbox")
+	   "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-           :clock-in :clock-resume
-           :empty-lines 1)
+	   (file+olp+datetree "~/org/Journal.org")
+	   "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+	   ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+	   :clock-in :clock-resume
+	   :empty-lines 1)
       ("jm" "Meeting" entry
-           (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
+	   (file+olp+datetree "~/org/Journal.org")
+	   "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+	   :clock-in :clock-resume
+	   :empty-lines 1)
 
       ("w" "Workflows")
-      ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+      ("we" "Checking Email" entry (file+olp+datetree "~/org/Journal.org")
+	   "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
 
       ("m" "Metrics Capture")
-      ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
+      ("mw" "Weight" table-line (file+headline "~/org/Metrics.org" "Weight")
        "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
 
   (define-key global-map (kbd "C-c j")
@@ -610,3 +610,16 @@
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org which-key vterm visual-fill-column use-package typescript-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering lsp-ui lsp-ivy ivy-rich ivy-prescient helpful general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles dap-mode counsel-projectile company-box command-log-mode auto-package-update all-the-icons-dired)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
