@@ -3,4 +3,5 @@ var/
 elpa/
 packages/
 .last-package-update-day
+server/
 
