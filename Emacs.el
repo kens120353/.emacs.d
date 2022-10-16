@@ -255,6 +255,7 @@
   :pin elpa  
   :commands (org-capture org-agenda)
   :hook (org-mode . efs/org-mode-setup)
+  :bind ("C-c C-a" . 'org-agenda)
   :config
   (setq org-ellipsis " ")
 
@@ -263,9 +264,9 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-	'("~/org/Tasks.org"
-	  "~/org/Habits.org"
-	  "~/org/Anniversaries.org"))
+        '("~/org/Tasks.org"
+          "~/org/Habits.org"
+          "~/org/Anniversaries.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
@@ -301,12 +302,12 @@
    '(("d" "Dashboard"
      ((agenda "" ((org-deadline-warning-days 7)))
       (todo "NEXT"
-	((org-agenda-overriding-header "Next Tasks")))
+        ((org-agenda-overriding-header "Next Tasks")))
       (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
     ("n" "Next Tasks"
      ((todo "NEXT"
-	((org-agenda-overriding-header "Next Tasks")))))
+        ((org-agenda-overriding-header "Next Tasks")))))
 
     ("W" "Work Tasks" tags-todo "+work-email")
 
@@ -318,53 +319,53 @@
 
     ("w" "Workflow Status"
      ((todo "WAIT"
-	    ((org-agenda-overriding-header "Waiting on External")
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "Waiting on External")
+             (org-agenda-files org-agenda-files)))
       (todo "REVIEW"
-	    ((org-agenda-overriding-header "In Review")
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "In Review")
+             (org-agenda-files org-agenda-files)))
       (todo "PLAN"
-	    ((org-agenda-overriding-header "In Planning")
-	     (org-agenda-todo-list-sublevels nil)
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "In Planning")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
       (todo "BACKLOG"
-	    ((org-agenda-overriding-header "Project Backlog")
-	     (org-agenda-todo-list-sublevels nil)
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "Project Backlog")
+             (org-agenda-todo-list-sublevels nil)
+             (org-agenda-files org-agenda-files)))
       (todo "READY"
-	    ((org-agenda-overriding-header "Ready for Work")
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "Ready for Work")
+             (org-agenda-files org-agenda-files)))
       (todo "ACTIVE"
-	    ((org-agenda-overriding-header "Active Projects")
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "Active Projects")
+             (org-agenda-files org-agenda-files)))
       (todo "COMPLETED"
-	    ((org-agenda-overriding-header "Completed Projects")
-	     (org-agenda-files org-agenda-files)))
+            ((org-agenda-overriding-header "Completed Projects")
+             (org-agenda-files org-agenda-files)))
       (todo "CANC"
-	    ((org-agenda-overriding-header "Cancelled Projects")
-	     (org-agenda-files org-agenda-files)))))))
+            ((org-agenda-overriding-header "Cancelled Projects")
+             (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
       ("tt" "Task" entry (file+olp "~/org/Tasks.org" "Inbox")
-	   "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
-	   (file+olp+datetree "~/org/Journal.org")
-	   "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-	   ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-	   :clock-in :clock-resume
-	   :empty-lines 1)
+           (file+olp+datetree "~/org/Journal.org")
+           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+           :clock-in :clock-resume
+           :empty-lines 1)
       ("jm" "Meeting" entry
-	   (file+olp+datetree "~/org/Journal.org")
-	   "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-	   :clock-in :clock-resume
-	   :empty-lines 1)
+           (file+olp+datetree "~/org/Journal.org")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :clock-in :clock-resume
+           :empty-lines 1)
 
       ("w" "Workflows")
       ("we" "Checking Email" entry (file+olp+datetree "~/org/Journal.org")
-	   "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
 
       ("m" "Metrics Capture")
       ("mw" "Weight" table-line (file+headline "~/org/Metrics.org" "Weight")
