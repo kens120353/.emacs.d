@@ -8,6 +8,9 @@
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
 
+(setq user-full-name "Ken Stevens"
+      user-mail-address "kens7601@hotmail.com")
+
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -255,7 +258,7 @@
   :pin elpa  
   :commands (org-capture org-agenda)
   :hook (org-mode . efs/org-mode-setup)
-  :bind ("C-c C-a" . 'org-agenda)
+  :bind ("C-c a" . 'org-agenda)
   :config
   (setq org-ellipsis " ")
 
@@ -478,6 +481,31 @@
   :config
   (pyvenv-mode 1))
 
+(use-package rust-mode
+  :defer t
+  :custom
+  (rust-format-on-save t)
+  (lsp-rust-server 'rust-analyzer))
+
+(use-package go-mode
+  :defer t
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save))
+
+(use-package go-snippets :defer t)
+
+(defun fix-messed-up-gofmt-path ()
+  (interactive)
+  (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
+
+(use-package gotest
+  :bind (:map go-mode-map
+              ("C-c a t" . #'go-test-current-test)))
+
+(use-package yaml-mode :defer t)
+(use-package toml-mode :defer t)
+(use-package markdown-mode)
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -610,3 +638,10 @@
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
+
+(defun find-config ()
+  "Edit config.org"
+  (interactive)
+  (find-file "~/.emacs.d/Emacs.org"))
+
+(global-set-key (kbd "C-c I") 'find-config)

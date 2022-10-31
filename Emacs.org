@@ -1,4 +1,4 @@
-#+title: Emacs From Scratch Configuration
+#+title: Ken's Emacs From Scratch Configuration
 #+Startup: overview
 
 
@@ -18,11 +18,10 @@ The following variables are used to tweak some of the configuration pieces for u
   ;; Make frame transparency overridable
   (defvar efs/frame-transparency '(90 . 90))
 
+  (setq user-full-name "Ken Stevens"
+        user-mail-address "kens7601@hotmail.com")
+  
 #+end_src
-
-* Tips for Use
-
-In this document I've added links in many places that lead you to documentation for the various packages we use.  If you're looking at this file in Emacs, you can put your cursor on a link and press =C-c C-o= or run =M-x org-open-at-point= to open the link in your web browser.
 
 * Startup Performance
 
@@ -417,7 +416,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
       :pin elpa  
       :commands (org-capture org-agenda)
       :hook (org-mode . efs/org-mode-setup)
-      :bind ("C-c C-a" . 'org-agenda)
+      :bind ("C-c a" . 'org-agenda)
       :config
       (setq org-ellipsis " ")
 
@@ -790,6 +789,42 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
 
 #+end_src
 
+*** Rust
+#+begin_src emacs-lisp
+
+  (use-package rust-mode
+    :defer t
+    :custom
+    (rust-format-on-save t)
+    (lsp-rust-server 'rust-analyzer))
+
+#+end_src
+*** Go
+#+begin_src emacs-lisp
+
+  (use-package go-mode
+    :defer t
+    :config
+    (add-hook 'before-save-hook #'gofmt-before-save))
+
+  (use-package go-snippets :defer t)
+
+  (defun fix-messed-up-gofmt-path ()
+    (interactive)
+    (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
+
+  (use-package gotest
+    :bind (:map go-mode-map
+                ("C-c a t" . #'go-test-current-test)))
+#+end_src
+*** Miscellaneous stuff
+#+begin_src emacs-lisp
+
+  (use-package yaml-mode :defer t)
+  (use-package toml-mode :defer t)
+  (use-package markdown-mode)
+  
+#+end_src
 ** Company Mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
@@ -1143,5 +1178,17 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
   ;; Make gc pauses faster by decreasing the threshold.
   (setq gc-cons-threshold (* 2 1000 1000))
+
+#+end_src
+
+* Find config file
+#+begin_src emacs-lisp
+
+  (defun find-config ()
+    "Edit config.org"
+    (interactive)
+    (find-file "~/.emacs.d/Emacs.org"))
+
+  (global-set-key (kbd "C-c I") 'find-config)
 
 #+end_src
