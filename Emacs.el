@@ -103,6 +103,7 @@
 (use-package general
   :after evil
   :config
+  (general-evil-setup t)
   (general-create-definer efs/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
@@ -135,6 +136,97 @@
   :after evil
   :config
   (evil-collection-init))
+
+(nvmap :keymaps 'override :prefix "SPC"
+  "SPC"   '(counsel-M-x :which-key "M-x")
+  "c c"   '(compile :which-key "Compile")
+  "c C"   '(recompile :which-key "Recompile")
+  "h r r" '((lambda () (interactive) (load-file "~/.emacs.d/init.el")) :which-key "Reload emacs config")
+  "t t"   '(toggle-truncate-lines :which-key "Toggle truncate lines"))
+(nvmap :keymaps 'override :prefix "SPC"
+  "m *"   '(org-ctrl-c-star :which-key "Org-ctrl-c-star")
+  "m +"   '(org-ctrl-c-minus :which-key "Org-ctrl-c-minus")
+  "m ."   '(counsel-org-goto :which-key "Counsel org goto")
+  "m e"   '(org-export-dispatch :which-key "Org export dispatch")
+  "m f"   '(org-footnote-new :which-key "Org footnote new")
+  "m h"   '(org-toggle-heading :which-key "Org toggle heading")
+  "m i"   '(org-toggle-item :which-key "Org toggle item")
+  "m n"   '(org-store-link :which-key "Org store link")
+  "m o"   '(org-set-property :which-key "Org set property")
+  "m t"   '(org-todo :which-key "Org todo")
+  "m x"   '(org-toggle-checkbox :which-key "Org toggle checkbox")
+  "m B"   '(org-babel-tangle :which-key "Org babel tangle")
+  "m I"   '(org-toggle-inline-images :which-key "Org toggle inline imager")
+  "m T"   '(org-todo-list :which-key "Org todo list")
+  "o a"   '(org-agenda :which-key "Org agenda")
+  )
+
+(nvmap :prefix "SPC"
+     "b b"   '(ibuffer :which-key "Ibuffer")
+     "b c"   '(clone-indirect-buffer-other-window :which-key "Clone indirect buffer other window")
+     "b k"   '(kill-current-buffer :which-key "Kill current buffer")
+     "b n"   '(next-buffer :which-key "Next buffer")
+     "b p"   '(previous-buffer :which-key "Previous buffer")
+     "b B"   '(ibuffer-list-buffers :which-key "Ibuffer list buffers")
+     "b K"   '(kill-buffer :which-key "Kill buffer"))
+
+(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
+     "e b"   '(eval-buffer :which-key "Eval elisp in buffer")
+     "e d"   '(eval-defun :which-key "Eval defun")
+     "e e"   '(eval-expression :which-key "Eval elisp expression")
+     "e l"   '(eval-last-sexp :which-key "Eval last sexression")
+     "e r"   '(eval-region :which-key "Eval region"))
+
+(nvmap :states '(normal visual) :keymaps 'override :prefix "SPC"
+     "."     '(find-file :which-key "Find file")
+     "f f"   '(find-file :which-key "Find file")
+     "f r"   '(counsel-recentf :which-key "Recent files")
+     "f s"   '(save-buffer :which-key "Save file")
+     "f u"   '(sudo-edit-find-file :which-key "Sudo find file")
+     "f y"   '(dt/show-and-copy-buffer-path :which-key "Yank file path")
+     "f C"   '(copy-file :which-key "Copy file")
+     "f D"   '(delete-file :which-key "Delete file")
+     "f R"   '(rename-file :which-key "Rename file")
+     "f S"   '(write-file :which-key "Save file as...")
+     "f U"   '(sudo-edit :which-key "Sudo edit file"))
+
+(use-package recentf
+  :config
+  (recentf-mode))
+
+(use-package sudo-edit) ;; Utilities for opening files with sudo
+
+(defun dt/show-and-copy-buffer-path ()
+  "Show and copy the full path to the current file in the minibuffer."
+  (interactive)
+  ;; list-buffers-directory is the variable set in dired buffers
+  (let ((file-name (or (buffer-file-name) list-buffers-directory)))
+    (if file-name
+        (message (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(defun dt/show-buffer-path-name ()
+  "Show the full path to the current file in the minibuffer."
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (if file-name
+        (progn
+          (message file-name)
+          (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(nvmap :prefix "SPC"
+  "r c"   '(copy-to-register :which-key "Copy to register")
+  "r f"   '(frameset-to-register :which-key "Frameset to register")
+  "r i"   '(insert-register :which-key "Insert register")
+  "r j"   '(jump-to-register :which-key "Jump to register")
+  "r l"   '(list-registers :which-key "List registers")
+  "r n"   '(number-to-register :which-key "Number to register")
+  "r r"   '(counsel-register :which-key "Choose a register")
+  "r v"   '(view-register :which-key "View a register")
+  "r w"   '(window-configuration-to-register :which-key "Window configuration to register")
+  "r +"   '(increment-register :which-key "Increment register")
+  "r SPC" '(point-to-register :which-key "Point to register"))
 
 (use-package command-log-mode
   :commands command-log-mode)
@@ -645,3 +737,7 @@
   (find-file "~/.emacs.d/Emacs.org"))
 
 (global-set-key (kbd "C-c I") 'find-config)
+
+(use-package smex
+  :init
+  (smex-initialize))
