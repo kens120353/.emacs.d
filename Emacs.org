@@ -1,5 +1,6 @@
-#+Title: Kens's emac configuration
+#+Title: Kens's emacs configuration
 #+Startup: overview
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
 * Welcome!
 
@@ -11,8 +12,8 @@ The following variables are used to tweak some of the configuration pieces for u
   ;;       in Emacs and init.el will be generated automatically!
 
   ;; You will most likely need to adjust this font size for your system!
-  (defvar efs/default-font-size 180)
-  (defvar efs/default-variable-font-size 180)
+  (defvar efs/default-font-size 160)
+  (defvar efs/default-variable-font-size 160)
 
   ;; Make frame transparency overridable
   (defvar efs/frame-transparency '(90 . 90))
@@ -322,7 +323,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     "r SPC" '(point-to-register :which-key "Point to register"))
 
 #+end_src
-* UI Configuration
+ UI Configuration
 ** Command Log Mode
 
 [[https://github.com/lewang/command-log-mode][command-log-mode]] is useful for displaying a panel showing each key binding you use in a panel on the right side of the frame.  Great for live streams and screencasts!
@@ -738,7 +739,6 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
 #+end_src
 
 * Development
-
 ** Languages
 
 *** IDE Features with lsp-mode
@@ -1032,7 +1032,6 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+end_src
 
 * Terminals
-
 ** term-mode
 
 =term-mode= is a built-in terminal emulator in Emacs.  Because it is written in Emacs Lisp, you can start using it immediately with very little configuration.  If you are on Linux or macOS, =term-mode= is a great choice to get started because it supports fairly complex terminal applications (=htop=, =vim=, etc) and works pretty reliably.  However, because it is written in Emacs Lisp, it can be slower than other options like =vterm=.  The speed will only be an issue if you regularly run console apps with a lot of output.
@@ -1071,23 +1070,6 @@ The =eterm-256color= package enhances the output of =term-mode= to enable handli
 
   (use-package eterm-256color
     :hook (term-mode . eterm-256color-mode))
-
-#+end_src
-
-** vterm
-
-[[https://github.com/akermu/emacs-libvterm/][vterm]] is an improved terminal emulator package which uses a compiled native module to interact with the underlying terminal applications.  This enables it to be much faster than =term-mode= and to also provide a more complete terminal emulation experience.
-
-Make sure that you have the [[https://github.com/akermu/emacs-libvterm/#requirements][necessary dependencies]] installed before trying to use =vterm= because there is a module that will need to be compiled before you can use it successfully.
-
-#+begin_src emacs-lisp
-
-  (use-package vterm
-    :commands vterm
-    :config
-    (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-    ;;(setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
-    (setq vterm-max-scrollback 10000))
 
 #+end_src
 
@@ -1266,27 +1248,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
 #+end_src
 
-* Applications
-
-** Some App
-
-This is an example of configuring another non-Emacs application using org-mode.  Not only do we write out the configuration at =.config/some-app/config=, we also compute the value that gets stored in this configuration from the Emacs Lisp block above it.
-
-#+NAME: the-value
-#+begin_src emacs-lisp :tangle no
-
-  (+ 55 100)
-
-#+end_src
-
-*NOTE*: Set the =:tangle= parameter below to =.config/some-app/config= for this to work!
-
-#+begin_src conf :tangle no :noweb yes
-
-  value=<<the-value()>>
-
-#+end_src
-
 * Runtime Performance
 
 Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
@@ -1318,3 +1279,4 @@ Dial the GC threshold back down so that garbage collection happens more frequent
   
 
 #+end_src
+

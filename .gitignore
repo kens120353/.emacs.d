@@ -5,3 +5,8 @@ packages/
 .last-package-update-day
 server/
 transient/
+show-notes/
+init.el
+run-emacs.sh
+stream-tweaks.el
+
