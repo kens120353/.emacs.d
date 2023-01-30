@@ -373,7 +373,8 @@
   (setq org-agenda-files
         '("~/org/Tasks.org"
           "~/org/Habits.org"
-          "~/org/Anniversaries.org"))
+          "~/org/Anniversaries.org"
+          "~/org/bills.org"))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
