@@ -34,12 +34,13 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-  ;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
 (require 'use-package)
 (setq use-package-always-ensure t)
+(setq use-package-verbose t)
+
+;; Install org-present if needed
+(unless (package-installed-p 'org-present)
+  (package-install 'org-present))
 
 (use-package auto-package-update
   :custom
@@ -81,6 +82,7 @@
 
 ;; Set up the visible bell
 (setq visible-bell t)
+(setq visual-line-mode t)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -752,22 +754,3 @@
 (use-package smex
   :init
   (smex-initialize))
-
-(use-package smartparens
-  :config
-  (setq sp-show-pair-from-inside nil)
-  (require 'smartparens-config)
-  :diminish smartparens-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(org-journal yaml-mode which-key visual-fill-column use-package typescript-mode toml-mode sudo-edit smex smartparens rust-mode rainbow-delimiters pyvenv python-mode org-bullets no-littering lsp-ui lsp-ivy ivy-rich ivy-prescient helpful gotest go-snippets general forge evil-nerd-commenter evil-collection eterm-256color eshell-git-prompt doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles dap-mode counsel-projectile company-box command-log-mode auto-package-update all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

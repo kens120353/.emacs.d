@@ -1,4 +1,4 @@
-#+Title: Kens's emacs configuration
+ #+Title: Ken's emacs configuration
 #+Startup: overview
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
@@ -58,12 +58,13 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (unless package-archive-contents
     (package-refresh-contents))
 
-    ;; Initialize use-package on non-Linux platforms
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-
   (require 'use-package)
   (setq use-package-always-ensure t)
+  (setq use-package-verbose t)
+  
+  ;; Install org-present if needed
+  (unless (package-installed-p 'org-present)
+    (package-install 'org-present))
 
 #+end_src
 
@@ -136,7 +137,8 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   ;; Set up the visible bell
   (setq visible-bell t)
-
+  (setq visual-line-mode t)
+  
   (column-number-mode)
   (global-display-line-numbers-mode t)
 
@@ -1306,13 +1308,3 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
 #+end_src
 
-* Smart Parens
-#+begin_src emacs-lisp
-
-  (use-package smartparens
-    :config
-    (setq sp-show-pair-from-inside nil)
-    (require 'smartparens-config)
-    :diminish smartparens-mode)
-
-#+end_src
