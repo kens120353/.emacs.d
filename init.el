@@ -611,9 +611,9 @@
   (interactive)
   (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
-(use-package gotest
-  :bind (:map go-mode-map
-              ("C-c a t" . #'go-test-current-test)))
+;; (use-package gotest
+;;   :bind (:map go-mode-map
+;;              ("C-c a t" . #'go-test-current-test)))
 
 (use-package yaml-mode :defer t)
 (use-package toml-mode :defer t)

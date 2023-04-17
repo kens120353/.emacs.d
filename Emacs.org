@@ -959,9 +959,9 @@ You can use the pyvenv package to use =virtualenv= environments in Emacs.  The =
     (interactive)
     (setq gofmt-command (string-trim (shell-command-to-string "which gofmt"))))
 
-  (use-package gotest
-    :bind (:map go-mode-map
-                ("C-c a t" . #'go-test-current-test)))
+  ;; (use-package gotest
+  ;;   :bind (:map go-mode-map
+  ;;              ("C-c a t" . #'go-test-current-test)))
 #+end_src
 *** Miscellaneous stuff
 #+begin_src emacs-lisp
