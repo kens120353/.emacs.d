@@ -1,4 +1,4 @@
- #+Title: Ken's emacs configuration
+#+Title: Ken's emacs configuration
 #+Startup: overview
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
@@ -126,35 +126,35 @@ This section configures basic UI settings that remove unneeded elements to make 
 
 #+begin_src emacs-lisp
 
-  (setq inhibit-startup-message t)
+   (setq inhibit-startup-message t)
 
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
-  (set-fringe-mode 10)        ; Give some breathing room
+   (scroll-bar-mode -1)        ; Disable visible scrollbar
+   (tool-bar-mode -1)          ; Disable the toolbar
+   (tooltip-mode -1)           ; Disable tooltips
+   (set-fringe-mode 10)        ; Give some breathing room
 
-  (menu-bar-mode -1)            ; Disable the menu bar
+   (menu-bar-mode -1)            ; Disable the menu bar
 
-  ;; Set up the visible bell
-  (setq visible-bell t)
-  (setq visual-line-mode t)
-  
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
+   ;; Set up the visible bell
+   (setq visible-bell t)
+   (setq visual-line-mode t)
 
-  ;; Set frame transparency
-  (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
-  (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   (column-number-mode)
+   (global-display-line-numbers-mode t)
 
-  ;; Disable line numbers for some modes
-  (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                  shell-mode-hook
-                  treemacs-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+   ;; Set frame transparency
+   (set-frame-parameter (selected-frame) 'alpha efs/frame-transparency)
+   (add-to-list 'default-frame-alist `(alpha . ,efs/frame-transparency))
+   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+   ;; Disable line numbers for some modes
+   (dolist (mode '(org-mode-hook
+                   term-mode-hook
+                   shell-mode-hook
+                   treemacs-mode-hook
+                   eshell-mode-hook))
+     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 #+end_src
 
@@ -220,6 +220,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     :config
     (evil-collection-init))
 
+  (use-package evil-smartparens)
+  
 #+end_src
 * General Keybindings
 #+begin_src emacs-lisp
@@ -1060,7 +1062,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+end_src
 
-* Terminals
+* Terminal
 ** term-mode
 
 =term-mode= is a built-in terminal emulator in Emacs.  Because it is written in Emacs Lisp, you can start using it immediately with very little configuration.  If you are on Linux or macOS, =term-mode= is a great choice to get started because it supports fairly complex terminal applications (=htop=, =vim=, etc) and works pretty reliably.  However, because it is written in Emacs Lisp, it can be slower than other options like =vterm=.  The speed will only be an issue if you regularly run console apps with a lot of output.
@@ -1298,7 +1300,7 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
   (global-set-key (kbd "C-c I") 'find-config)
 
-#+end_src
+#+en
 * Smex
 #+begin_src emacs-lisp
 
